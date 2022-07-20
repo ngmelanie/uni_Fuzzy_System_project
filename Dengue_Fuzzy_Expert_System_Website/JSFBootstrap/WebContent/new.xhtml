@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<meta charset="utf-8" name="viewport"
+		content="width=device-width, initial-scale=1"
+		http-equiv="X-UA-Conpatible" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<title>Dengue Self-Checker</title>
+	<style type="text/css">
+.col-xs-updated {
+	width: 92% !important;
+}
+</style>
+</h:head>
+<body>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-brand">Dengue Self-Checker</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-xs-updated">
+				<h:form id="test" styleClass="form-horizontal">
+					<div>
+						<p>1. Do you have any body parts feel aches and pains ? For
+							examples, eye pain, typically behind the eyes, muscle, joint, or
+							bone pain.</p>
+						<p>
+							<h:selectOneRadio value="#{system.achesPains}" layout="pageDirection">
+								<f:selectItem itemValue="9" itemLabel="Yes" />
+								<f:selectItem itemValue="5" itemLabel="Maybe" />
+								<f:selectItem itemValue="1" itemLabel="No" />
+							</h:selectOneRadio>
+						</p>
+					</div>
+					<div>
+						<p>2. Are you having fever (37.5 degree celsius above)
+							continuously more than three days ?</p>
+						<p>
+							<h:selectOneRadio value="#{system.feverDays}" layout="pageDirection">
+								<f:selectItem itemValue="7" itemLabel="Yes" />
+								<f:selectItem itemValue="5" itemLabel="Maybe" />
+								<f:selectItem itemValue="1" itemLabel="No" />
+							</h:selectOneRadio>
+						</p>
+					</div>
+					<div>
+						<p>3. Do you have any hemorrhagic manifestation at any part of
+							your body ? (The most common hemorrhagic manifestations are mild
+							and include a positive tourniquet test, skin hemorrhages
+							(petechiae, hematomas), epistaxis (nose bleed), gingival bleeding
+							(gum bleed), and microscopic hematuria.)</p>
+						<p>
+							<h:selectOneRadio value="#{system.haemo}" layout="pageDirection">
+								<f:selectItem itemValue="9" itemLabel="Yes" />
+								<f:selectItem itemValue="5" itemLabel="Maybe" />
+								<f:selectItem itemValue="1" itemLabel="No" />
+							</h:selectOneRadio>
+						</p>
+					</div>
+					<div>
+						<p>4. Do you feel rash ? (Rash in dengue fever is a
+							maculopapular or macular confluent rash over the face, thorax,
+							and flexor surfaces, with islands of skin sparing. The rash
+							typically begins on day 3 and persists 2-3 days.)</p>
+						<p>
+							<h:selectOneRadio value="#{system.rash}" layout="pageDirection">
+								<f:selectItem itemValue="9" itemLabel="Yes" />
+								<f:selectItem itemValue="5" itemLabel="Maybe" />
+								<f:selectItem itemValue="1" itemLabel="No" />
+							</h:selectOneRadio>
+						</p>
+					</div>
+					<h:commandButton value="Submit" action="#{system.createOutput}"
+						styleClass="btn btn-default" />
+				</h:form>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

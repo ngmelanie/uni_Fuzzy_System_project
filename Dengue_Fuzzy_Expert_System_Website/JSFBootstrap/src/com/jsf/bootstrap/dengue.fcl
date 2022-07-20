@@ -1,0 +1,110 @@
+/*
+	WONG WAI JIAN (A175985)
+*/
+
+FUNCTION_BLOCK dengue
+
+VAR_INPUT
+    aches_pains : REAL;
+    fever_days : REAL;
+    haemorrhagic_manifestation : REAL;
+    rash : REAL;
+END_VAR
+
+VAR_OUTPUT
+    possibility_of_getting_dengue : REAL;
+END_VAR
+
+FUZZIFY aches_pains
+    TERM no := (0, 0) (2.5, 1) (4, 0) (9, 0);
+    TERM maybe := (3, 0) (5, 1) (7, 0);
+    TERM yes := (0, 0) (6, 0) (7.5, 1) (10, 0);
+END_FUZZIFY
+
+FUZZIFY fever_days
+    TERM normal := (0, 0) (1.5, 1) (3, 0) (7, 0);
+    TERM dangerous := (0, 0) (2, 0) (3, 1) (7, 1);
+END_FUZZIFY
+
+FUZZIFY haemorrhagic_manifestation
+    TERM no := (0, 0) (2.5, 1) (4, 0) (9, 0);
+    TERM maybe := (3, 0) (5, 1) (7, 0);
+    TERM yes := (0, 0) (6, 0) (7.5, 1) (10, 0);
+END_FUZZIFY
+
+FUZZIFY rash
+    TERM no := (0, 0) (2.5, 1) (4, 0) (9, 0);
+    TERM maybe := (3, 0) (5, 1) (7, 0);
+    TERM yes := (0, 0) (6, 0) (7.5, 1) (10, 0);
+END_FUZZIFY
+
+DEFUZZIFY possibility_of_getting_dengue
+    TERM low := (0, 0) (2.5, 1) (4, 0) (10, 0);
+    TERM moderate := (4, 0) (5.5, 1) (7, 0);
+    TERM high := (0, 0) (7, 0) (8.5, 1) (10, 0);
+END_DEFUZZIFY
+
+RULEBLOCK No1
+    AND : MIN;
+    ACT : MIN;
+    ACCU : MAX;
+
+    RULE 1 : IF aches_pains IS yes AND fever_days IS normal AND haemorrhagic_manifestation IS yes AND rash IS yes THEN possibility_of_getting_dengue IS high;
+    RULE 2 : IF aches_pains IS yes AND fever_days IS normal AND haemorrhagic_manifestation IS yes AND rash IS maybe THEN possibility_of_getting_dengue IS high;
+    RULE 3 : IF aches_pains IS yes AND fever_days IS normal AND haemorrhagic_manifestation IS yes AND rash IS no THEN possibility_of_getting_dengue IS moderate;
+    RULE 4 : IF aches_pains IS yes AND fever_days IS normal AND haemorrhagic_manifestation IS maybe AND rash IS yes THEN possibility_of_getting_dengue IS high;
+    RULE 5 : IF aches_pains IS yes AND fever_days IS normal AND haemorrhagic_manifestation IS maybe AND rash IS maybe THEN possibility_of_getting_dengue IS moderate;
+    RULE 6 : IF aches_pains IS yes AND fever_days IS normal AND haemorrhagic_manifestation IS maybe AND rash IS no THEN possibility_of_getting_dengue IS moderate;
+    RULE 7 : IF aches_pains IS yes AND fever_days IS normal AND haemorrhagic_manifestation IS no AND rash IS yes THEN possibility_of_getting_dengue IS moderate;
+    RULE 8 : IF aches_pains IS yes AND fever_days IS normal AND haemorrhagic_manifestation IS no AND rash IS maybe THEN possibility_of_getting_dengue IS moderate;
+    RULE 9 : IF aches_pains IS yes AND fever_days IS normal AND haemorrhagic_manifestation IS no AND rash IS no THEN possibility_of_getting_dengue IS low;
+    RULE 10 : IF aches_pains IS yes AND fever_days IS dangerous AND haemorrhagic_manifestation IS yes AND rash IS yes THEN possibility_of_getting_dengue IS high;
+    RULE 11 : IF aches_pains IS yes AND fever_days IS dangerous AND haemorrhagic_manifestation IS yes AND rash IS maybe THEN possibility_of_getting_dengue IS high;
+    RULE 12 : IF aches_pains IS yes AND fever_days IS dangerous AND haemorrhagic_manifestation IS yes AND rash IS no THEN possibility_of_getting_dengue IS high;
+    RULE 13 : IF aches_pains IS yes AND fever_days IS dangerous AND haemorrhagic_manifestation IS maybe AND rash IS yes THEN possibility_of_getting_dengue IS high;
+    RULE 14 : IF aches_pains IS yes AND fever_days IS dangerous AND haemorrhagic_manifestation IS maybe AND rash IS maybe THEN possibility_of_getting_dengue IS high;
+    RULE 15 : IF aches_pains IS yes AND fever_days IS dangerous AND haemorrhagic_manifestation IS maybe AND rash IS no THEN possibility_of_getting_dengue IS moderate;
+    RULE 16 : IF aches_pains IS yes AND fever_days IS dangerous AND haemorrhagic_manifestation IS no AND rash IS yes THEN possibility_of_getting_dengue IS high;
+    RULE 17 : IF aches_pains IS yes AND fever_days IS dangerous AND haemorrhagic_manifestation IS no AND rash IS maybe THEN possibility_of_getting_dengue IS moderate;
+    RULE 18 : IF aches_pains IS yes AND fever_days IS dangerous AND haemorrhagic_manifestation IS no AND rash IS no THEN possibility_of_getting_dengue IS moderate;
+    RULE 19 : IF aches_pains IS maybe AND fever_days IS normal AND haemorrhagic_manifestation IS yes AND rash IS yes THEN possibility_of_getting_dengue IS high;
+    RULE 20 : IF aches_pains IS maybe AND fever_days IS normal AND haemorrhagic_manifestation IS yes AND rash IS maybe THEN possibility_of_getting_dengue IS moderate;
+    RULE 21 : IF aches_pains IS maybe AND fever_days IS normal AND haemorrhagic_manifestation IS yes AND rash IS no THEN possibility_of_getting_dengue IS moderate;
+    RULE 22 : IF aches_pains IS maybe AND fever_days IS normal AND haemorrhagic_manifestation IS maybe AND rash IS yes THEN possibility_of_getting_dengue IS moderate;
+    RULE 23 : IF aches_pains IS maybe AND fever_days IS normal AND haemorrhagic_manifestation IS maybe AND rash IS maybe THEN possibility_of_getting_dengue IS moderate;
+    RULE 24 : IF aches_pains IS maybe AND fever_days IS normal AND haemorrhagic_manifestation IS maybe AND rash IS no THEN possibility_of_getting_dengue IS low;
+    RULE 25 : IF aches_pains IS maybe AND fever_days IS normal AND haemorrhagic_manifestation IS no AND rash IS yes THEN possibility_of_getting_dengue IS moderate;
+    RULE 26 : IF aches_pains IS maybe AND fever_days IS normal AND haemorrhagic_manifestation IS no AND rash IS maybe THEN possibility_of_getting_dengue IS low;
+    RULE 27 : IF aches_pains IS maybe AND fever_days IS normal AND haemorrhagic_manifestation IS no AND rash IS no THEN possibility_of_getting_dengue IS low;
+    RULE 28 : IF aches_pains IS maybe AND fever_days IS dangerous AND haemorrhagic_manifestation IS yes AND rash IS yes THEN possibility_of_getting_dengue IS high;
+    RULE 29 : IF aches_pains IS maybe AND fever_days IS dangerous AND haemorrhagic_manifestation IS yes AND rash IS maybe THEN possibility_of_getting_dengue IS high;
+    RULE 30 : IF aches_pains IS maybe AND fever_days IS dangerous AND haemorrhagic_manifestation IS yes AND rash IS no THEN possibility_of_getting_dengue IS moderate;
+    RULE 31 : IF aches_pains IS maybe AND fever_days IS dangerous AND haemorrhagic_manifestation IS maybe AND rash IS yes THEN possibility_of_getting_dengue IS high;
+    RULE 32 : IF aches_pains IS maybe AND fever_days IS dangerous AND haemorrhagic_manifestation IS maybe AND rash IS maybe THEN possibility_of_getting_dengue IS moderate;
+    RULE 33 : IF aches_pains IS maybe AND fever_days IS dangerous AND haemorrhagic_manifestation IS maybe AND rash IS no THEN possibility_of_getting_dengue IS moderate;
+    RULE 34 : IF aches_pains IS maybe AND fever_days IS dangerous AND haemorrhagic_manifestation IS no AND rash IS yes THEN possibility_of_getting_dengue IS moderate;
+    RULE 35 : IF aches_pains IS maybe AND fever_days IS dangerous AND haemorrhagic_manifestation IS no AND rash IS maybe THEN possibility_of_getting_dengue IS moderate;
+    RULE 36 : IF aches_pains IS maybe AND fever_days IS dangerous AND haemorrhagic_manifestation IS no AND rash IS no THEN possibility_of_getting_dengue IS low;
+    RULE 37 : IF aches_pains IS no AND fever_days IS normal AND haemorrhagic_manifestation IS yes AND rash IS yes THEN possibility_of_getting_dengue IS moderate;
+    RULE 38 : IF aches_pains IS no AND fever_days IS normal AND haemorrhagic_manifestation IS yes AND rash IS maybe THEN possibility_of_getting_dengue IS moderate;
+    RULE 39 : IF aches_pains IS no AND fever_days IS normal AND haemorrhagic_manifestation IS yes AND rash IS no THEN possibility_of_getting_dengue IS low;
+    RULE 40 : IF aches_pains IS no AND fever_days IS normal AND haemorrhagic_manifestation IS maybe AND rash IS yes THEN possibility_of_getting_dengue IS moderate;
+    RULE 41 : IF aches_pains IS no AND fever_days IS normal AND haemorrhagic_manifestation IS maybe AND rash IS maybe THEN possibility_of_getting_dengue IS low;
+    RULE 42 : IF aches_pains IS no AND fever_days IS normal AND haemorrhagic_manifestation IS maybe AND rash IS no THEN possibility_of_getting_dengue IS low;
+    RULE 43 : IF aches_pains IS no AND fever_days IS normal AND haemorrhagic_manifestation IS no AND rash IS yes THEN possibility_of_getting_dengue IS low;
+    RULE 44 : IF aches_pains IS no AND fever_days IS normal AND haemorrhagic_manifestation IS no AND rash IS maybe THEN possibility_of_getting_dengue IS low;
+    RULE 45 : IF aches_pains IS no AND fever_days IS normal AND haemorrhagic_manifestation IS no AND rash IS no THEN possibility_of_getting_dengue IS low;
+    RULE 46 : IF aches_pains IS no AND fever_days IS dangerous AND haemorrhagic_manifestation IS yes AND rash IS yes THEN possibility_of_getting_dengue IS high;
+    RULE 47 : IF aches_pains IS no AND fever_days IS dangerous AND haemorrhagic_manifestation IS yes AND rash IS maybe THEN possibility_of_getting_dengue IS moderate;
+    RULE 48 : IF aches_pains IS no AND fever_days IS dangerous AND haemorrhagic_manifestation IS yes AND rash IS no THEN possibility_of_getting_dengue IS moderate;
+    RULE 49 : IF aches_pains IS no AND fever_days IS dangerous AND haemorrhagic_manifestation IS maybe AND rash IS yes THEN possibility_of_getting_dengue IS moderate;
+    RULE 50 : IF aches_pains IS no AND fever_days IS dangerous AND haemorrhagic_manifestation IS maybe AND rash IS maybe THEN possibility_of_getting_dengue IS moderate;
+    RULE 51 : IF aches_pains IS no AND fever_days IS dangerous AND haemorrhagic_manifestation IS maybe AND rash IS no THEN possibility_of_getting_dengue IS low;
+    RULE 52 : IF aches_pains IS no AND fever_days IS dangerous AND haemorrhagic_manifestation IS no AND rash IS yes THEN possibility_of_getting_dengue IS moderate;
+    RULE 53 : IF aches_pains IS no AND fever_days IS dangerous AND haemorrhagic_manifestation IS no AND rash IS maybe THEN possibility_of_getting_dengue IS low;
+    RULE 54 : IF aches_pains IS no AND fever_days IS dangerous AND haemorrhagic_manifestation IS no AND rash IS no THEN possibility_of_getting_dengue IS low;
+
+
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK
